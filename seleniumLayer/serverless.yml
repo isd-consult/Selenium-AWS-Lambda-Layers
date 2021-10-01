@@ -1,0 +1,41 @@
+
+service: selenium-layer
+
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: us-east-1
+  timeout: 900
+
+layers:
+  selenium:
+    path: selenium
+    compatibleRuntimes:
+      - "python3.6"
+  requests:
+    path: requests
+    compatibleRuntimes:
+      - "python3.6"
+  chromedriver:
+    path: chromedriver
+    description: chrome driver layer
+    compatibleRuntimes:
+      - "python3.6"
+resources:
+  Outputs:
+    SeleniumLayerExport:
+        Value:
+          Ref: SeleniumLambdaLayer
+        Export:
+          Name: SeleniumLambdaLayer
+    RequestsLayerExport:
+        Value:
+          Ref: RequestsLambdaLayer
+        Export:
+          Name: RequestsLambdaLayer
+    ChromedriverLayerExport:
+      Value:
+        Ref: ChromedriverLambdaLayer
+      Export:
+        Name: ChromedriverLambdaLayer

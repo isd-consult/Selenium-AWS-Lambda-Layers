@@ -1,0 +1,24 @@
+
+service: selenium-lambda
+
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: us-east-1
+  timeout: 900
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource:
+        - "arn:aws:s3:::selenium-dev-download-bucket/*"
+
+functions:
+  construct-connect:
+    handler: handler.constructConnect
+    memorySize: 2048
+    layers:
+      - ${cf:selenium-layer-dev.SeleniumLayerExport}
+      - ${cf:selenium-layer-dev.RequestsLayerExport}
+      - ${cf:selenium-layer-dev.ChromedriverLayerExport}
